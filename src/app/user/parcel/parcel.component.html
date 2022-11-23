@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="parcel">
+    <i (click)="showMenus()" class="fa-solid fa-bars pointer hamburger"></i>
+
+    <div class="header">
+      <h4 class="header-orders">Your Orders</h4>
+      <div class="conversion">
+        <div class="conversion-header">
+          <span>Weight (kg) </span>
+          <span>To</span>
+          <span>Cost</span>
+        </div>
+        <div class="conversion-body">
+          <input
+            type="number"
+            name="weight"
+            [(ngModel)]="weight"
+            placeholder="weight"
+          />
+          <input
+            type="number"
+            name="cost"
+            [(ngModel)]="cost"
+            placeholder="cost"
+          />
+        </div>
+
+        <button class="conversion-btn pointer" (click)="convert()">
+          Convert
+        </button>
+      </div>
+    </div>
+
+    <div class="order-header">
+      <span>Track Id</span>
+      <span class="mobile">Location</span>
+      <span>Destination</span>
+      <span class="mobile">Cost</span>
+      <span class="mobile">Weight</span>
+      <span>Status</span>
+      <span class="mobile">Track</span>
+    </div>
+    <div class="select">
+      <select name="" id="">
+        <option value="" selected="false">Select</option>
+        <option value="">From Me</option>
+        <option value="">To Me</option>
+      </select>
+    </div>
+
+    <div class="order-item">
+      <div
+        *ngFor="
+          let item of collection | paginate: { itemsPerPage: 3, currentPage: p }
+        "
+      >
+        <div class="order-body">
+          <span>{{ item.trackId }}</span>
+          <span class="mobile">{{ item.location }}</span>
+          <span>{{ item.destination }}</span>
+          <span class="mobile">{{ item.cost }}</span>
+          <span class="mobile">{{ item.weight }}</span>
+          <button class="status">{{ item.status }}</button>
+          <i
+            (click)="showMap()"
+            class="pointer fa-solid fa-map-location-dot location"
+          ></i>
+        </div>
+      </div>
+
+      <div class="page">
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="pagination"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <div class="help">
+    <div class="notification">
+      <div class="notification-header">
+        <i class="fa-solid fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="notification-body">
+        <div class="notify-card">
+          <div class="notify-card-list">Your order has been delivered</div>
+          <div class="notify-card-list">Your order has been delivered</div>
+          <div class="notify-card-list">Your order has been delivered</div>
+        </div>
+      </div>
+    </div>
+    <div class="map">
+      <google-map [options]="mapOptions" height="300px" width="100%">
+        <map-marker [position]="marker.position"></map-marker>
+      </google-map>
+    </div>
+  </div>
+
+  <div class="menubar" *ngIf="showMenu">
+    <div class="close pointer">
+      <i class="fa-solid fa-xmark" (click)="showMenus()"></i>
+    </div>
+    <span>Profile</span>
+    <ul class="profile">
+      <li>Name: Yomi</li>
+      <li>Settings</li>
+      <li>Parcel</li>
+      <li>Track</li>
+      <li>Logout</li>
+    </ul>
+  </div>
+</div>
+
+<div class="details" *ngIf="ShowMap">
+  <i (click)="showMap()" class="fa-solid fa-xmark closemap pointer"></i>
+  <div class="details-card">
+    <div class="info">
+      <ul>
+        <li>trackId: 5555555</li>
+        <li>location: canada,</li>
+        <li>destination: Texas,</li>
+        <li>cost: 300,</li>
+        <li>weight: 33,</li>
+        <li>status: 'pending',</li>
+      </ul>
+    </div>
+    <div class="map">
+      <div>
+        <google-map [options]="mapOptions" height="300px" width="100%">
+          <map-marker [position]="marker.position"></map-marker>
+        </google-map>
+      </div>
+    </div>
+  </div>
+</div>
